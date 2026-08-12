@@ -15,28 +15,24 @@ return {
       },
     },
   },
-  -- Use global php-cs-fixer config
   {
     "stevearc/conform.nvim",
-    opts = {
-      formatters = {
-        php_cs_fixer = {
-          append_args = {
-            "--config=" .. vim.fn.expand("~/.config/php-cs-fixer/config.php"),
-          },
+    opts = function(_, opts)
+      opts.formatters_by_ft = opts.formatters_by_ft or {}
+      opts.formatters_by_ft.php = { "prettier" }
+
+      opts.formatters = opts.formatters or {}
+      opts.formatters.prettier = vim.tbl_deep_extend("force", opts.formatters.prettier or {}, {
+        condition = function()
+          return true
+        end,
+        append_args = {
+          "--plugin",
+          vim.fn.expand("~/.local/share/prettier-plugins/node_modules/@prettier/plugin-php/src/index.mjs"),
         },
-      },
-    },
+      })
+    end,
   },
-  -- Disable php-cs-fixer
-  -- {
-  --   "stevearc/conform.nvim",
-  --   opts = {
-  --     formatters_by_ft = {
-  --       php = {},
-  --     },
-  --   },
-  -- },
   -- Disable phpcs
   {
     "mfussenegger/nvim-lint",
