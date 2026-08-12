@@ -15,4 +15,35 @@ return {
       },
     },
   },
+  -- Use global php-cs-fixer config
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters = {
+        php_cs_fixer = {
+          append_args = {
+            "--config=" .. vim.fn.expand("~/.config/php-cs-fixer/config.php"),
+          },
+        },
+      },
+    },
+  },
+  -- Disable php-cs-fixer
+  -- {
+  --   "stevearc/conform.nvim",
+  --   opts = {
+  --     formatters_by_ft = {
+  --       php = {},
+  --     },
+  --   },
+  -- },
+  -- Disable phpcs
+  {
+    "mfussenegger/nvim-lint",
+    opts = {
+      linters_by_ft = {
+        php = {},
+      },
+    },
+  },
 }
